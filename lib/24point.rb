@@ -1,8 +1,12 @@
 # coding: utf-8
 #主要算法是:
 #取给定的几个数字中的任意两个分别进行加减乘除运算,得出S1，再将S1与剩下的数字分别进行计算最终得到结果。
-class TfPoint
+require File.join(File.dirname(__FILE__), '24point', 'base')
+require File.join(File.dirname(__FILE__), '24point', 'exception')
 
+class TfPoint
+  include TfPointInstanceMethod
+  extend TfPointClassMethod
   RESULT = 24
   MATH_SYMBOL = ["+","-", "*", "/"]
   RANGE = 1..13
@@ -15,33 +19,10 @@ class TfPoint
       @results = []
       @relations = {}
     else
-      e = Exception.new("The number you given is invalid!")
+      e = TfException.new("The number you given is invalid!")
       raise e
     end
   end
-#根据数组取出所有的两两组合
-  def circle_calculate(numbers)
-    return numbers.permutation(2).to_a 
-  end
-
-  # 剪掉一个数组中的某一组数字,与array的减法不同,减法会剪掉多个相同的元素。
-  # ex: cut_arry([1, 1, 1], [1]) => [1, 1]
-  def cut_array(arr = [], cut_arr = [])
-    result = arr
-    cut_arr.each do |element|
-      result = cut_array_with_element(result, element)
-    end
-    return result
-  end
-
-  def cut_array_with_element(arr, cut_element)
-    result = []
-    arr.each_with_index do |item, index|
-      result << item unless arr.include?(cut_element) && index == arr.index(cut_element)
-    end
-    return result
-  end
-
 
 #计算并获得结果
   def get_result
@@ -89,30 +70,5 @@ class TfPoint
     end
     
   end
-  
-  class << self 
-    def validate?(number_array = [])
-      number_array.all?{|number| number.class == Fixnum }
-    end
-
-
-    def calculate(first = 0, last = 0, method)
-      case method.to_i
-      when 0
-        first + last
-      when 1
-        first - last
-      when 2
-        first * last
-      when 3
-        if first % last != 0
-#           raise Exception
-        else
-          first / last
-        end
-      end
-    end
-  end
-
 end
 
