@@ -10,7 +10,10 @@ describe TfPoint do
   it "should calculate success" do 
     tf = TfPoint::Base.new(6, 6, 6, 6)
     result = tf.calculate_all
-    puts result
+    result.each{|x| x.expression?.should be_true}
+    # puts result#.length
+    
+    puts result.collect{|x| tf.optimize_expression(x)}
     result.should_not be_nil
   end
 
