@@ -1,11 +1,6 @@
 module TfPoint
   class Base
-    attr_accessor :given_numbers
-    attr_accessor :number
-    
-    attr_accessor :expression
-    attr_accessor :count_of_number
-    attr_accessor :all_expression
+    attr_accessor :given_numbers, :number, :expression, :count_of_number, :all_expression
     
     NUMBER_TO_CAL = 24
     
@@ -120,7 +115,7 @@ private
       reg = '((?<expression>\(?(\d*)[\+\-\*\/](\d*|\g<expression>)\)?)|\d*)'
         # 乘法，统一排序，前大后小 ex: (3*3)+(3*5)=> 3*3+5*3
       if /(?<all_exp>\((?<left_number>((?<expression_left>\(?(\d*)[\+\-\*\/](\d*|\g<expression_left>)\)?)|\d*))\*(?<right_number>((?<expression_right>\(?(\d*)[\+\-\*\/](\d*|\g<expression_right>)\)?)|\d*))\))/ =~ exp
-        left_number, right_number = right_number, left_number if left_number.to_i < right_number.to_i
+        left_number, right_number = right_number, left_number if left_number =~ /^\d*$/ && right_number =~ /^\d*$/ && left_number.to_i < right_number.to_i
         s_exp = "#{left_number}*#{right_number}"
         remove_bracket(exp.gsub!(all_exp, s_exp))
         #除法: 去除括号
