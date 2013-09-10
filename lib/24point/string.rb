@@ -4,5 +4,9 @@ class String
   def expression?
     !(self =~ /(?<expression>\((?<left>(\g<expression>|\d*))(?<operate>[\+\-\*\/])(?<right>(\g<expression>|\d*))\))/).nil?
   end
+
+  def is_num?
+  	!(self =~ /^\d*$/).nil?
+  end
   
 end
