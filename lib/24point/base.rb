@@ -17,6 +17,7 @@ class TfPointClass
   end
   
   def result
+    return all_expression if all_expression != []
     given_numbers.permutation.to_a.uniq.each do |given_number|
       @number = given_number
       @expression = given_number.collect{|number| number.to_s}
